@@ -1,24 +1,23 @@
 package ru.wtrn.starline.importer.client
 
-import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.http.HttpRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.client.ClientHttpRequestExecution
 import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.http.client.ClientHttpResponse
-import org.springframework.http.client.support.HttpRequestWrapper
-import ru.wtrn.starline.importer.client.dto.StarlineLoginRequest
 import ru.wtrn.starline.importer.configuration.properties.StarlineApiProperties
 
 class StarlineClientAuthInterceptor(private val apiProperties: StarlineApiProperties) : ClientHttpRequestInterceptor {
+
+    private val authHolder = StarlineAuthHolder(apiProperties)
 
     override fun intercept(
         request: HttpRequest,
         body: ByteArray,
         execution: ClientHttpRequestExecution
     ): ClientHttpResponse {
-        val wrappedRequest = addAuthHeadersToRequest(request)
+        val wrappedRequest = authHolder.addAuthenticationToRequest(request)
         val response = execution.execute(wrappedRequest, body)
 
         if (checkResponseRequiresAuthenticationRefresh(response)) {
@@ -26,11 +25,6 @@ class StarlineClientAuthInterceptor(private val apiProperties: StarlineApiProper
         }
 
         return response
-    }
-
-    private fun addAuthHeadersToRequest(httpRequest: HttpRequest): HttpRequest {
-        val wrapper = HttpRequestWrapper(httpRequest)
-        return wrapper
     }
 
     private fun checkResponseRequiresAuthenticationRefresh(response: ClientHttpResponse): Boolean {
@@ -54,7 +48,8 @@ class StarlineClientAuthInterceptor(private val apiProperties: StarlineApiProper
         body: ByteArray,
         execution: ClientHttpRequestExecution
     ): ClientHttpResponse {
-        val wrappedRequest = addAuthHeadersToRequest(request)
+        authHolder.refreshAuthentication()
+        val wrappedRequest = authHolder.addAuthenticationToRequest(request)
         return execution.execute(wrappedRequest, body)
     }
 }
