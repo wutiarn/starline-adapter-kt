@@ -9,6 +9,7 @@ import org.springframework.http.client.support.HttpRequestWrapper
 import ru.wtrn.starline.importer.client.dto.StarlineLoginRequest
 import ru.wtrn.starline.importer.client.exception.AuthenticationFailedException
 import ru.wtrn.starline.importer.configuration.properties.StarlineApiProperties
+import java.io.File
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
@@ -16,7 +17,9 @@ class StarlineAuthHolder(private val apiProperties: StarlineApiProperties) {
     private val httpClient = RestTemplateBuilder().rootUri(apiProperties.baseUrl).build()
     private val logger = KotlinLogging.logger { }
 
-    private var cookieHeader: String? = null
+    private var cookieHeader: String? = apiProperties.authCacheLocation?.let {
+        File(apiProperties.authCacheLocation).takeIf { it.exists() }?.readText()
+    }
     private val cookieHeaderLock = ReentrantLock()
 
     fun addAuthenticationToRequest(httpRequest: HttpRequest): HttpRequest {
@@ -49,6 +52,12 @@ class StarlineAuthHolder(private val apiProperties: StarlineApiProperties) {
             ?: throw IllegalStateException("Successful login request did not return Set-Cookie headers")
         val cookieHeader = composeCookieHeader(cookies)
         logger.info { "Starline authentication refreshed" }
+
+        if (apiProperties.authCacheLocation != null) {
+            val file = File(apiProperties.authCacheLocation)
+            file.writeText(cookieHeader)
+        }
+
         return cookieHeader
     }
 

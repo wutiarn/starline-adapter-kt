@@ -8,5 +8,6 @@ import org.springframework.boot.context.properties.ConstructorBinding
 data class StarlineApiProperties(
     val baseUrl: String,
     val username: String,
-    val password: String
+    val password: String,
+    val authCacheLocation: String? = "auth.txt"
 )
