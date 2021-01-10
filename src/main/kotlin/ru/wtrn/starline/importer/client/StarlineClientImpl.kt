@@ -8,12 +8,12 @@ import ru.wtrn.starline.importer.configuration.properties.StarlineApiProperties
 import java.time.Instant
 
 @Component
-class StarlineClientImpl(private val properties: StarlineApiProperties) : StarlineClient {
+class StarlineClientImpl(properties: StarlineApiProperties) : StarlineClient {
     private val httpClient: RestTemplate
     private val logger = KotlinLogging.logger {  }
 
     init {
-        val authInterceptor = StarlineClientAuthInterceptor()
+        val authInterceptor = StarlineClientAuthInterceptor(properties)
         httpClient = RestTemplateBuilder()
             .rootUri(properties.baseUrl)
             .interceptors(authInterceptor)
