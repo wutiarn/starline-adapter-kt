@@ -1,0 +1,8 @@
+ru:
+  wtrn:
+    starline:
+      importer:
+        api:
+          base-url: https://starline-online.ru
+          username: TODO
+          password: TODO
