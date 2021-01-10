@@ -11,10 +11,11 @@ import ru.wtrn.starline.importer.configuration.properties.StarlineApiProperties
 
 class StarlineAuthHolder(private val apiProperties: StarlineApiProperties) {
     private val httpClient = RestTemplateBuilder().rootUri(apiProperties.baseUrl).build()
-    private val logger = KotlinLogging.logger {  }
+    private val logger = KotlinLogging.logger { }
 
     fun addAuthenticationToRequest(httpRequest: HttpRequest): HttpRequest {
         val wrapper = HttpRequestWrapper(httpRequest)
+
         return wrapper
     }
 
@@ -29,7 +30,13 @@ class StarlineAuthHolder(private val apiProperties: StarlineApiProperties) {
         }
 
         val cookies = response.headers["Set-Cookie"]
+            ?: throw IllegalStateException("Successful login request did not return Set-Cookie headers")
+        val cookieHeader = composeCookieHeader(cookies)
 
         logger.info { "Starline authentication refreshed" }
+    }
+
+    private fun composeCookieHeader(setCookieValues: List<String>): String {
+        return setCookieValues.map { it.split(";").first() }.joinToString(separator = "; ")
     }
 }
