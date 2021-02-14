@@ -12,8 +12,8 @@ data class StarlineRouteResponse(
     @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy::class)
     data class RouteMeta(
         val mileage: Long,
-        val movingTime: Int,
-        val waitingTime: Int
+        val movingTime: Long,
+        val waitingTime: Long
     )
 
     @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy::class)
@@ -23,8 +23,8 @@ data class StarlineRouteResponse(
         val y: Float?,
         val t: Long?,
         val satQty: Int?,
-        val movingTime: Int?,
-        val waitingTime: Int?,
+        val movingTime: Long?,
+        val waitingTime: Long?,
         val mileage: Long?,
         val nodes: List<RouteTrackNode>?
     )

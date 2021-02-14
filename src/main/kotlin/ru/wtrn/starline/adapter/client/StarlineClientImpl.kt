@@ -11,6 +11,7 @@ import ru.wtrn.starline.adapter.client.dto.StarlineRouteResponse
 import ru.wtrn.starline.adapter.configuration.properties.StarlineApiProperties
 import java.net.URL
 import java.net.URLEncoder
+import java.time.Duration
 import java.time.Instant
 
 @Component
@@ -70,6 +71,41 @@ class StarlineClientImpl(
 
         val responseDto = objectMapper.readValue(response.body, StarlineRouteResponse::class.java)
 
-        TODO("Not yet implemented")
+        return StarlineRoute(
+            meta = responseDto.meta.let {
+                StarlineRoute.RouteMeta(
+                    mileage = it.mileage,
+                    movingTime = Duration.ofSeconds(it.movingTime),
+                    waitingTime = Duration.ofSeconds(it.waitingTime)
+                )
+            },
+            tracks = responseDto.data.filter { it.type == "TRACK" }.map { dataNode ->
+                StarlineRoute.RouteTrack(
+                    timestamp = Instant.ofEpochSecond(dataNode.nodes!!.first().t),
+                    mileage = dataNode.mileage!!,
+                    movingTime = Duration.ofSeconds(dataNode.movingTime!!),
+                    waitingTime = Duration.ofSeconds(dataNode.waitingTime!!),
+                    nodes = dataNode.nodes.map {
+                        StarlineRoute.RouteTrackNode(
+                            x = it.x,
+                            y = it.y,
+                            timestamp = Instant.ofEpochSecond(it.t),
+                            speed = it.s,
+                            satQty = it.satQty,
+                            mileage = it.mileage
+                        )
+                    }
+                )
+            },
+            stops = responseDto.data.filter { it.type == "STOP" }.map { dataNode ->
+                StarlineRoute.RouteStop(
+                    x = dataNode.x!!,
+                    y = dataNode.y!!,
+                    timestamp = Instant.ofEpochSecond(dataNode.t!!),
+                    satQty = dataNode.satQty!!,
+                    waitingTime = Duration.ofSeconds(dataNode.waitingTime!!)
+                )
+            }
+        )
     }
 }

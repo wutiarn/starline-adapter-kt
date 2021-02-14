@@ -23,30 +23,37 @@ data class CanInfo(
 
 data class StarlineRoute(
     val meta: RouteMeta,
-    val data: List<RouteDataNode>
-)
+    val tracks: List<RouteTrack>,
+    val stops: List<RouteStop>
+) {
+    data class RouteMeta(
+        val mileage: Long,
+        val movingTime: Duration,
+        val waitingTime: Duration
+    )
 
-data class RouteMeta(
-    val mileage: Long,
-    val movingTime: Duration,
-    val waitingTime: Duration
-)
+    data class RouteTrack(
+        val timestamp: Instant,
+        val mileage: Long,
+        val movingTime: Duration,
+        val waitingTime: Duration,
+        val nodes: List<RouteTrackNode>
+    )
 
-data class RouteDataNode(
-    val x: Float,
-    val y: Float,
-    val timestamp: Instant,
-    val satQty: Int,
-    val movingTime: Duration,
-    val waitingTime: Duration,
-    val mileage: Long,
-    val nodes: List<RouteTrackNode>
-)
+    data class RouteTrackNode(
+        val x: Float,
+        val y: Float,
+        val speed: Int,
+        val timestamp: Instant,
+        val satQty: Int,
+        val mileage: Long
+    )
 
-data class RouteTrackNode(
-    val x: Float,
-    val y: Float,
-    val timestamp: Instant,
-    val satQty: Int,
-    val mileage: Long
-)
+    data class RouteStop(
+        val x: Float,
+        val y: Float,
+        val timestamp: Instant,
+        val satQty: Int,
+        val waitingTime: Duration
+    )
+}
