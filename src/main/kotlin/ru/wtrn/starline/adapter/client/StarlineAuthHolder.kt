@@ -29,6 +29,7 @@ class StarlineAuthHolder(private val apiProperties: StarlineApiProperties) {
     }
 
     fun refreshAuthentication() {
+        logger.info { "Forced authentication refresh started" }
         doRefreshAuthentication()
     }
 
