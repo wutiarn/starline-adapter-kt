@@ -5,6 +5,7 @@ import java.time.Instant
 
 interface StarlineClient {
     fun getDevices(): List<StarlineDevice>
+    fun getCanInfo(deviceId: String): CanInfo
     fun getRoute(deviceId: String, since: Instant, until: Instant): StarlineRoute
 }
 
@@ -13,6 +14,11 @@ data class StarlineDevice(
     val deviceId: String,
     val engineTemp: Int,
     val interiorTemp: Int
+)
+
+data class CanInfo(
+    val mileage: Int,
+    val timestamp: Instant
 )
 
 data class StarlineRoute(

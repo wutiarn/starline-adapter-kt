@@ -27,7 +27,7 @@ class StarlineClientImpl(
 
     override fun getDevices(): List<StarlineDevice> {
         val response = httpClient.getForEntity("/device", String::class.java)
-        logger.info { "Devices response: ${response.body}" }
+        logger.debug { "Devices response: ${response.body}" }
 
         val responseDto = objectMapper.readValue(response.body, StarlineDeviceResponse::class.java)
         return responseDto.answer.devices.map {
@@ -38,6 +38,17 @@ class StarlineClientImpl(
                 interiorTemp = it.ctemp
             )
         }
+    }
+
+    override fun getCanInfo(deviceId: String): CanInfo {
+        val response = httpClient.getForEntity("/deviceSettings/settings?deviceId=$deviceId&formId=can", String::class.java)
+        logger.debug { "CAN info response: ${response.body}" }
+
+        val mileageNode = objectMapper.readTree(response.body).get("desc").get("mileage")
+        return CanInfo(
+            mileage = mileageNode.get("val").asInt(),
+            timestamp = mileageNode.get("ts").let { Instant.ofEpochSecond(it.asLong()) }
+        )
     }
 
     override fun getRoute(deviceId: String, since: Instant, until: Instant): StarlineRoute {
