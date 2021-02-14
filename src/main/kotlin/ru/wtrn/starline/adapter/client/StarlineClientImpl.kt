@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import ru.wtrn.starline.adapter.client.dto.StarlineDeviceResponse
+import ru.wtrn.starline.adapter.client.dto.StarlineRouteResponse
 import ru.wtrn.starline.adapter.configuration.properties.StarlineApiProperties
 import java.net.URL
 import java.net.URLEncoder
@@ -66,6 +67,9 @@ class StarlineClientImpl(
             .toString()
         val response = httpClient.getForEntity(url, String::class.java)
         logger.debug { "Route response: ${response.body}" }
+
+        val responseDto = objectMapper.readValue(response.body, StarlineRouteResponse::class.java)
+
         TODO("Not yet implemented")
     }
 }
