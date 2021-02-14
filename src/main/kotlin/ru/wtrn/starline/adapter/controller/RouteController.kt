@@ -16,6 +16,10 @@ class RouteController(private val starlineClient: StarlineClient) {
     @PostMapping
     fun importRoute(@RequestBody request: RouteRequest) {
         logger.info { "Handling request: $request" }
-        starlineClient.getDevices()
+        starlineClient.getRoute(
+            deviceId = request.deviceId,
+            since = request.since.toInstant(),
+            until = request.until.toInstant()
+        )
     }
 }

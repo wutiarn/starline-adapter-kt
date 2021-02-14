@@ -5,8 +5,11 @@ import mu.KotlinLogging
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
+import org.springframework.web.util.UriComponentsBuilder
 import ru.wtrn.starline.adapter.client.dto.StarlineDeviceResponse
 import ru.wtrn.starline.adapter.configuration.properties.StarlineApiProperties
+import java.net.URL
+import java.net.URLEncoder
 import java.time.Instant
 
 @Component
@@ -15,7 +18,7 @@ class StarlineClientImpl(
     private val objectMapper: ObjectMapper
 ) : StarlineClient {
     private val httpClient: RestTemplate
-    private val logger = KotlinLogging.logger {  }
+    private val logger = KotlinLogging.logger { }
 
     init {
         val authInterceptor = StarlineClientAuthInterceptor(properties)
@@ -41,7 +44,8 @@ class StarlineClientImpl(
     }
 
     override fun getCanInfo(deviceId: String): CanInfo {
-        val response = httpClient.getForEntity("/deviceSettings/settings?deviceId=$deviceId&formId=can", String::class.java)
+        val response =
+            httpClient.getForEntity("/deviceSettings/settings?deviceId=$deviceId&formId=can", String::class.java)
         logger.debug { "CAN info response: ${response.body}" }
 
         val mileageNode = objectMapper.readTree(response.body).get("desc").get("mileage")
@@ -52,6 +56,16 @@ class StarlineClientImpl(
     }
 
     override fun getRoute(deviceId: String, since: Instant, until: Instant): StarlineRoute {
+        val url = UriComponentsBuilder.fromPath("/device/$deviceId/route")
+            .queryParam("beginTime", since.epochSecond)
+            .queryParam("endTime", until.epochSecond)
+            .queryParam("timezoneOffset", 0)
+            .queryParam("shortParkingTime", 5)
+            .queryParam("longParkingTime", 30)
+            .build()
+            .toString()
+        val response = httpClient.getForEntity(url, String::class.java)
+        logger.debug { "Route response: ${response.body}" }
         TODO("Not yet implemented")
     }
 }
