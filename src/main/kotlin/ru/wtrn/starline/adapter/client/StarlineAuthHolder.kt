@@ -52,6 +52,7 @@ class StarlineAuthHolder(private val apiProperties: StarlineApiProperties) {
         val cookies = response.headers[HttpHeaders.SET_COOKIE]
             ?: throw IllegalStateException("Successful login request did not return Set-Cookie headers")
         val cookieHeader = composeCookieHeader(cookies)
+        this.cookieHeader = cookieHeader
         logger.info { "Starline authentication refreshed" }
 
         if (apiProperties.authCacheLocation != null) {
