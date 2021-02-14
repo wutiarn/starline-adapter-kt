@@ -1,7 +1,7 @@
 ru:
   wtrn:
     starline:
-      importer:
+      adapter:
         api:
           base-url: https://starline-online.ru
           username: TODO

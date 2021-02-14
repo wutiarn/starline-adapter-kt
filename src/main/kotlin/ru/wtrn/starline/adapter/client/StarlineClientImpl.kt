@@ -1,12 +1,12 @@
-package ru.wtrn.starline.importer.client
+package ru.wtrn.starline.adapter.client
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import mu.KotlinLogging
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
-import ru.wtrn.starline.importer.client.dto.StarlineDeviceResponse
-import ru.wtrn.starline.importer.configuration.properties.StarlineApiProperties
+import ru.wtrn.starline.adapter.client.dto.StarlineDeviceResponse
+import ru.wtrn.starline.adapter.configuration.properties.StarlineApiProperties
 import java.time.Instant
 
 @Component

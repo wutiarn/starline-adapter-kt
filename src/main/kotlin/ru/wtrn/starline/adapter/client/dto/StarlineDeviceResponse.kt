@@ -1,4 +1,4 @@
-package ru.wtrn.starline.importer.client.dto
+package ru.wtrn.starline.adapter.client.dto
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming

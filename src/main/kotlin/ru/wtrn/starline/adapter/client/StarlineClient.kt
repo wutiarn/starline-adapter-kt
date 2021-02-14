@@ -1,4 +1,4 @@
-package ru.wtrn.starline.importer.client
+package ru.wtrn.starline.adapter.client
 
 import java.time.Duration
 import java.time.Instant

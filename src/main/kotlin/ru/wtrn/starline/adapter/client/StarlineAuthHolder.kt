@@ -1,4 +1,4 @@
-package ru.wtrn.starline.importer.client
+package ru.wtrn.starline.adapter.client
 
 import mu.KotlinLogging
 import org.springframework.boot.web.client.RestTemplateBuilder
@@ -6,9 +6,9 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.client.support.HttpRequestWrapper
-import ru.wtrn.starline.importer.client.dto.StarlineLoginRequest
-import ru.wtrn.starline.importer.client.exception.AuthenticationFailedException
-import ru.wtrn.starline.importer.configuration.properties.StarlineApiProperties
+import ru.wtrn.starline.adapter.client.dto.StarlineLoginRequest
+import ru.wtrn.starline.adapter.client.exception.AuthenticationFailedException
+import ru.wtrn.starline.adapter.configuration.properties.StarlineApiProperties
 import java.io.File
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock

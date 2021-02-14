@@ -1,4 +1,4 @@
-package ru.wtrn.starline.importer.client
+package ru.wtrn.starline.adapter.client
 
 import org.springframework.http.HttpRequest
 import org.springframework.http.HttpStatus
@@ -6,7 +6,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.client.ClientHttpRequestExecution
 import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.http.client.ClientHttpResponse
-import ru.wtrn.starline.importer.configuration.properties.StarlineApiProperties
+import ru.wtrn.starline.adapter.configuration.properties.StarlineApiProperties
 
 class StarlineClientAuthInterceptor(private val apiProperties: StarlineApiProperties) : ClientHttpRequestInterceptor {
 

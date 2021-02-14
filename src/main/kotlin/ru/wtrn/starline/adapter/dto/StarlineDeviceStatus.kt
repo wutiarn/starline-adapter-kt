@@ -1,4 +1,4 @@
-package ru.wtrn.starline.importer.dto
+package ru.wtrn.starline.adapter.dto
 
 import java.time.Instant
 

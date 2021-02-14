@@ -1,4 +1,4 @@
-package ru.wtrn.starline.importer.client.dto
+package ru.wtrn.starline.adapter.client.dto
 
 data class StarlineLoginRequest(
     val username: String,

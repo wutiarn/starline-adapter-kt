@@ -1,20 +1,20 @@
-package ru.wtrn.starline.importer.controller
+package ru.wtrn.starline.adapter.controller
 
 import mu.KotlinLogging
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import ru.wtrn.starline.importer.client.StarlineClient
-import ru.wtrn.starline.importer.dto.RouteImportRequest
+import ru.wtrn.starline.adapter.client.StarlineClient
+import ru.wtrn.starline.adapter.dto.RouteRequest
 
 @RestController
-@RequestMapping("/api/v1/import")
-class ImportController(private val starlineClient: StarlineClient) {
+@RequestMapping("/api/v1/route")
+class RouteController(private val starlineClient: StarlineClient) {
     private val logger = KotlinLogging.logger {  }
 
-    @PostMapping("route")
-    fun importRoute(@RequestBody request: RouteImportRequest) {
+    @PostMapping
+    fun importRoute(@RequestBody request: RouteRequest) {
         logger.info { "Handling request: $request" }
         starlineClient.getDevices()
     }

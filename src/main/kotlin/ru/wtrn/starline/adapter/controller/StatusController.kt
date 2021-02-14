@@ -1,11 +1,9 @@
-package ru.wtrn.starline.importer.controller
+package ru.wtrn.starline.adapter.controller
 
 import mu.KotlinLogging
 import org.springframework.web.bind.annotation.*
-import ru.wtrn.starline.importer.client.StarlineClient
-import ru.wtrn.starline.importer.client.StarlineDevice
-import ru.wtrn.starline.importer.dto.RouteImportRequest
-import ru.wtrn.starline.importer.dto.StarlineDeviceStatus
+import ru.wtrn.starline.adapter.client.StarlineClient
+import ru.wtrn.starline.adapter.dto.StarlineDeviceStatus
 import java.lang.IllegalStateException
 
 @RestController

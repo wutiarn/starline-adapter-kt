@@ -1,9 +1,8 @@
-package ru.wtrn.starline.importer.dto
+package ru.wtrn.starline.adapter.dto
 
-import java.time.Instant
 import java.time.ZonedDateTime
 
-data class RouteImportRequest(
+data class RouteRequest(
     val deviceId: String? = null,
     val since: ZonedDateTime,
     val until: ZonedDateTime
