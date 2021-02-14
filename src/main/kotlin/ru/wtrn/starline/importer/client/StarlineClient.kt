@@ -10,7 +10,9 @@ interface StarlineClient {
 
 data class StarlineDevice(
     val alias: String,
-    val deviceId: String
+    val deviceId: String,
+    val engineTemp: Int,
+    val interiorTemp: Int
 )
 
 data class StarlineRoute(
