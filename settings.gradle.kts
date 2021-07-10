@@ -1,1 +1,1 @@
-rootProject.name = "starline-adapter"
+rootProject.name = "starline-adapter-kt"
