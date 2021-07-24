@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.4.1"
 	id("io.spring.dependency-management") version "1.0.10.RELEASE"
-	kotlin("jvm") version "1.4.21"
-	kotlin("kapt") version "1.4.21"
-	kotlin("plugin.spring") version "1.4.21"
+	kotlin("jvm") version "1.5.20"
+	kotlin("kapt") version "1.5.20"
+	kotlin("plugin.spring") version "1.5.20"
 }
 
 group = "ru.wtrn.starline"
@@ -27,7 +27,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("io.github.microutils:kotlin-logging-jvm:2.0.2")
+	implementation("io.github.microutils:kotlin-logging-jvm:2.0.10")
 	kapt("org.springframework.boot:spring-boot-configuration-processor")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
