@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "ru.wtrn.starline.adapter.grpc";
+option java_outer_classname = "StarlineAdapterProto";
+
+import "google/protobuf/timestamp.proto";
+
+package starline;
+
+service StarlineAdapter {
+    rpc GetStatus(StatusRequest) returns (StatusResponse) {}
+}
+
+message StatusRequest {
+  string deviceId = 1;
+}
+
+message StatusResponse {
+  string alias = 1;
+  int32 engineTemp = 2;
+  int32 interiorTemp = 3;
+  int32 mileage = 4;
+  google.protobuf.Timestamp activityTimestamp = 5;
+}
+
+message RouteRequest {
+  string deviceId = 1;
+  google.protobuf.Timestamp since = 2;
+  google.protobuf.Timestamp until = 3;
+}
